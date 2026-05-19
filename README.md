@@ -1,4 +1,4 @@
-# 🐧 Pengu Photobooth
+# Pengu Photobooth
 
 A fun web app where you can upload your photos, arrange them into a photo strip, decorate with stickers, and download the result!
 
@@ -7,7 +7,7 @@ A fun web app where you can upload your photos, arrange them into a photo strip,
 
 ---
 
-## ✨ Features
+## Features
 
 - Choose from multiple photo strip frame layouts
 - Upload your own photos into each slot
@@ -16,7 +16,7 @@ A fun web app where you can upload your photos, arrange them into a photo strip,
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - [React](https://react.dev/) — UI framework
 - [Vite](https://vitejs.dev/) — dev server & build tool
@@ -26,7 +26,7 @@ A fun web app where you can upload your photos, arrange them into a photo strip,
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -53,7 +53,7 @@ Then open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 yozuStuff/
@@ -76,7 +76,7 @@ yozuStuff/
 
 ---
 
-## 📦 Available Scripts
+## Available Scripts
 
 | Command | Description |
 |---|---|
@@ -86,7 +86,7 @@ yozuStuff/
 
 ---
 
-## 🌐 Deploying
+## Deploying
 
 The easiest way to share this app publicly is [Vercel](https://vercel.com):
 
@@ -102,7 +102,7 @@ Or just drag and drop your project folder on [Netlify Drop](https://app.netlify.
 
 ---
 
-## 🖼️ Adding Assets
+## Adding Assets
 
 Place any new images in `src/assets/` and import them in your component:
 
@@ -114,7 +114,7 @@ import myImage from '../assets/myImage.png'
 
 ---
 
-## 📝 Notes
+## Notes
 
 - No backend required — everything runs in the browser
 - No `.env` file needed for the base app

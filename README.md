@@ -22,7 +22,7 @@ A fun web app where you can upload your photos, arrange them into a photo strip,
 - [Vite](https://vitejs.dev/) — dev server & build tool
 - [Lucide React](https://lucide.dev/icons/) — icons
 - HTML5 Canvas — photo strip compositing & export
-- CSS animations — floating elements & hover effects
+- CSS animations — floating elements & hover effectsV
 
 ---
 

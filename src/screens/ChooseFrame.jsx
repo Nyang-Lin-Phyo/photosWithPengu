@@ -100,7 +100,7 @@ export default function ChooseFrame({ goTo, setFrame }) {
                 <img
                   src={f.img}
                   alt={f.label}
-                  style={{ height: 260, objectFit: 'contain', display: 'block' }}
+                  style={{ height: 'clamp(220px, 40vh, 500px)', objectFit: 'contain', display: 'block' }}
                 />
                 {isSelected && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontFamily: 'Nunito', fontWeight: 700, fontSize: '0.9rem', color: '#333' }}>

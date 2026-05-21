@@ -7,10 +7,10 @@ import frame3 from '../assets/framePoro3.png'
 import frame4 from '../assets/framePoro4.png'
 
 const FRAMES = [
-  { id: 'poro', label: 'poro frenzy', img: frame1, slots: 4 },
-  { id: 'league', label: 'league frenzy', img: frame2, slots: 4 },
-  { id: 'cloud', label: 'cloud frenzy', img: frame3, slots: 4 },
-  { id: 'crown', label: 'crown frenzy', img: frame4, slots: 4 },
+  { id: 'poro', label: 'poro frenzy', img: frame1, slots: 3 },
+  { id: 'league', label: 'league frenzy', img: frame2, slots: 3 },
+  { id: 'cloud', label: 'cloud frenzy', img: frame3, slots: 3 },
+  { id: 'crown', label: 'crown frenzy', img: frame4, slots: 3 },
 ]
 
 const ROTATIONS = [-12, -5, 5, 12]
@@ -126,7 +126,7 @@ export default function ChooseFrame({ goTo, setFrame }) {
             exit
           </button>
           <button
-            onClick={() => selected && goTo('addPhotos')}
+            onClick={() => selected && goTo('posePengu')}
             disabled={!selected}
             style={{
               background: selected ? '#111' : '#fff',

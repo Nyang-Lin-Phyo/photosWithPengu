@@ -9,9 +9,9 @@ import f4 from '../assets/framePoro4.png'
 const FRAME_IMGS = { poro: f1, league: f2, cloud: f3, crown: f4 }
 
 const SLOTS = [
-  { top: 26,  height: 187 - 26  },
-  { top: 216, height: 377 - 216 },
-  { top: 404, height: 563 - 404 },
+  { topPct: 26 / 807, heightPct: (187 - 26) / 807 },
+  { topPct: 216 / 807, heightPct: (377 - 216) / 807 },
+  { topPct: 404 / 807, heightPct: (563 - 404) / 807 },
 ]
 
 const steps = [
@@ -138,12 +138,11 @@ export default function AddPhotos({ goTo, frame, photos, setPhotos, penguSlots }
         <div style={{ flex: 1, display: 'flex', minHeight: 0, padding: '1rem 2rem', gap: '2rem', alignItems: 'center', overflowY: 'auto' }}>
 
           {/* Left: frame */}
-          <div style={{ flexShrink: 0, position: 'relative', marginLeft: '100px', alignSelf: 'center' }}>
-            {/* Frame on top */}
+          <div style={{ flexShrink: 0, position: 'relative', marginLeft: '100px', alignSelf: 'center', height: 'min(80vh, 807px)' }}>
             <img
               src={frameImg}
               alt="frame"
-              style={{ height: 807, width: 'auto', display: 'block', userSelect: 'none', pointerEvents: 'none', position: 'relative', zIndex: 3 }}
+              style={{ height: '100%', width: 'auto', display: 'block', userSelect: 'none', pointerEvents: 'none', position: 'relative', zIndex: 3 }}
             />
 
             {/* Slots: photo bottom (z1), pengu middle (z2), frame top (z3) */}
@@ -151,7 +150,11 @@ export default function AddPhotos({ goTo, frame, photos, setPhotos, penguSlots }
               <div
                 key={i}
                 className={`ap-slot${activeSlot === i ? ' active' : ''}${slotPhotos[i] ? ' filled' : ''}`}
-                style={{ top: slot.top, height: slot.height, zIndex: 0 }}
+                style={{
+                  top: `${slot.topPct * 100}%`,
+                  height: `${slot.heightPct * 100}%`,
+                  zIndex: 0
+                }}
                 onClick={() => setActiveSlot(i)}
               >
                 {/* Photo — bottom layer */}
@@ -232,9 +235,9 @@ export default function AddPhotos({ goTo, frame, photos, setPhotos, penguSlots }
                   {slotPhotos[activeSlot]
                     ? <img src={slotPhotos[activeSlot]} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     : <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', color: '#bbb' }}>
-                        <Upload size={32} />
-                        <span style={{ fontSize: '0.85rem' }}>click a photo to assign to slot {activeSlot + 1}</span>
-                      </div>
+                      <Upload size={32} />
+                      <span style={{ fontSize: '0.85rem' }}>click a photo to assign to slot {activeSlot + 1}</span>
+                    </div>
                   }
                 </div>
               </div>

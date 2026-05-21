@@ -24,9 +24,9 @@ const PENGUS = [
 const FRAME_IMGS = { poro: f1, league: f2, cloud: f3, crown: f4 }
 
 const SLOTS = [
-  { top: 26,  height: 187 - 26  },
-  { top: 216, height: 377 - 216 },
-  { top: 404, height: 563 - 404 },
+  { topPct: 26/807,  heightPct: (187-26)/807  },
+  { topPct: 216/807, heightPct: (377-216)/807 },
+  { topPct: 404/807, heightPct: (563-404)/807 },
 ]
 
 const steps = [
@@ -169,20 +169,17 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
         <div style={{ flex: 1, display: 'flex', minHeight: 0, padding: '1rem 2rem', gap: '2rem', alignItems: 'center', overflowY: 'auto' }}>
 
           {/* Left: frame */}
-          <div style={{ flexShrink: 0, position: 'relative', marginLeft: '100px', width: 'auto', alignSelf: 'center' }}>
-            {/* Frame image on top via z-index */}
+          <div style={{ flexShrink: 0, position: 'relative', marginLeft: '100px', alignSelf: 'center', height: 'min(80vh, 807px)' }}>
             <img
               src={frameImg}
               alt="frame"
-              style={{ height: 807, width: 'auto', display: 'block', userSelect: 'none', pointerEvents: 'none', position: 'relative', zIndex: 2 }}
+              style={{ height: '100%', width: 'auto', display: 'block', userSelect: 'none', pointerEvents: 'none', position: 'relative', zIndex: 3 }}
             />
-
-            {/* Slots — behind frame, pengu inside */}
             {SLOTS.map((slot, i) => (
               <div
                 key={i}
                 className={`pp-slot${hoveringSlot === i ? ' hovering' : ''}`}
-                style={{ top: slot.top, height: slot.height, zIndex: 1 }}
+                style={{ top: `${slot.topPct * 100}%`, height: `${slot.heightPct * 100}%`, zIndex: 1 }}
                 onDragOver={e => onDragOverSlot(e, i)}
                 onDrop={e => onDropSlot(e, i)}
                 onDragLeave={() => setHoveringSlot(null)}
@@ -194,12 +191,7 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
                   <img
                     src={slotContents[i].src}
                     alt=""
-                    style={{
-                      position: 'absolute', bottom: 0, right: 0,
-                      width: '70%', height: '100%',
-                      objectFit: 'contain', objectPosition: 'bottom right',
-                      pointerEvents: 'none', userSelect: 'none',
-                    }}
+                    style={{ position: 'absolute', bottom: 0, right: 0, width: '70%', height: '100%', objectFit: 'contain', objectPosition: 'bottom right', pointerEvents: 'none', userSelect: 'none' }}
                   />
                 )}
               </div>

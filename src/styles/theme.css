@@ -63,6 +63,7 @@
   --color-light-overlay: rgba(255, 255, 255, 0.4);
   --color-yellow-hover: rgba(255, 216, 77, 0.2);
   --color-yellow-wash: rgba(255, 216, 77, 0.06);
+  --color-dialog-backdrop: rgba(0, 0, 0, 0.35);
   --color-shadow-sm: rgba(0, 0, 0, 0.12);
   --color-shadow-md: rgba(0, 0, 0, 0.15);
   --color-shadow-lg: rgba(0, 0, 0, 0.25);

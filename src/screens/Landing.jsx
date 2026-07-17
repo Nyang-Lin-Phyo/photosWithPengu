@@ -1,8 +1,8 @@
 import { Camera, Sparkles, ChevronRight } from "lucide-react";
+import NavBar from "../components/NavBar";
 import pengu from "../assets/pengus/penguMustacheSunglasses.png";
-import penguIcon from "../assets/pengus/pengu.png";
 
-export default function Landing({ goTo }) {
+export default function Landing({ onStart }) {
   return (
     <>
       <style>{`
@@ -96,38 +96,7 @@ export default function Landing({ goTo }) {
           overflow: "hidden",
         }}
       >
-        {/* Navbar */}
-        <nav
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.6rem",
-            padding: "1rem 2rem",
-            borderBottom: "1px solid #eee",
-            flexShrink: 0,
-          }}
-        >
-          <img
-            src={penguIcon}
-            alt="pengu"
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span
-            style={{
-              fontFamily: "Baloo 2",
-              fontWeight: 700,
-              fontSize: "1rem",
-              color: "#111",
-            }}
-          >
-            pengu photobooth
-          </span>
-        </nav>
+        <NavBar />
 
         {/* Main */}
         <main
@@ -301,7 +270,7 @@ export default function Landing({ goTo }) {
             </h1>
 
             <button
-              onClick={() => goTo("chooseFrame")}
+              onClick={onStart}
               style={{
                 display: "inline-flex",
                 alignItems: "center",

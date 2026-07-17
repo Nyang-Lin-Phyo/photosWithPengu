@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { ChevronRight, ChevronLeft, Check } from "lucide-react";
-import penguIcon from "../assets/pengus/pengu.png";
+import { ChevronRight, ChevronLeft } from "lucide-react";
+import NavBar from "../components/NavBar";
+import StepIndicator from "../components/StepIndicator";
+import { SCREENS } from "../navigation";
 import p1 from "../assets/pengus/pengu.png";
 import p2 from "../assets/pengus/penguBlur.png";
 import p3 from "../assets/pengus/penguYozu.png";
@@ -29,16 +31,23 @@ const SLOTS = [
   { topPct: 404 / 807, heightPct: (563 - 404) / 807 },
 ];
 
-const steps = [
-  { n: 1, label: "frame\nselection", done: true },
-  { n: 2, label: "pose\npengu", active: true },
-  { n: 3, label: "add your\nphotos" },
-  { n: 4, label: "decorate!" },
-];
-
-export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
+export default function PosePengu({
+  frame,
+  onBack,
+  onNext,
+  onReset,
+  penguSlots,
+  setPenguSlots,
+}) {
   const slots = 3;
-  const [slotContents, setSlotContents] = useState(Array(slots).fill(null));
+  const [slotContents, setSlotContents] = useState(() =>
+    Array.from({ length: slots }, (_, i) => {
+      const src = penguSlots?.[i];
+      if (!src) return null;
+      const pengu = PENGUS.find((p) => p.src === src);
+      return { penguId: pengu?.id ?? `slot-${i}`, src };
+    }),
+  );
   const [dragging, setDragging] = useState(null);
   const [hoveringSlot, setHoveringSlot] = useState(null);
 
@@ -101,8 +110,8 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
           cursor: grab;
           border-radius: 12px;
           overflow: hidden;
-          background: #FFF3C4;
-          border: 3px solid transparent;
+          background: var(--color-surface-warm);
+          border: 3px solid var(--color-transparent);
           transition: border 0.15s, transform 0.15s, box-shadow 0.15s;
           aspect-ratio: 1;
           display: flex;
@@ -111,9 +120,9 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
           position: relative;
         }
         .pengu-card:hover {
-          border-color: #FFD84D;
+          border-color: var(--color-accent-yellow);
           transform: scale(1.05);
-          box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+          box-shadow: var(--shadow-pengu-card);
         }
         .pengu-card:active { cursor: grabbing; }
         .pp-slot {
@@ -122,13 +131,13 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
           right: 9%;
           overflow: hidden;
           border-radius: 6px;
-          border: 2px dashed transparent;
+          border: 2px dashed var(--color-transparent);
           transition: border 0.15s, background 0.15s;
           box-sizing: border-box;
         }
         .pp-slot.hovering {
-          border-color: #FFD84D !important;
-          background: rgba(255,216,77,0.2);
+          border-color: var(--color-accent-yellow) !important;
+          background: var(--color-yellow-hover);
         }
       `}</style>
 
@@ -137,124 +146,22 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
           display: "flex",
           flexDirection: "column",
           height: "100vh",
-          background: "#fff",
-          fontFamily: "Nunito, sans-serif",
+          background: "var(--color-page)",
+          fontFamily: "var(--font-family-body)",
           overflow: "hidden",
         }}
       >
-        {/* Navbar */}
-        <nav
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.6rem",
-            padding: "1rem 2rem",
-            borderBottom: "1px solid #eee",
-            flexShrink: 0,
-          }}
-        >
-          <img
-            src={penguIcon}
-            alt="pengu"
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span
-            style={{
-              fontFamily: "Baloo 2",
-              fontWeight: 700,
-              fontSize: "1rem",
-              color: "#111",
-            }}
-          >
-            pengu photobooth
-          </span>
-        </nav>
+        <NavBar onHome={onReset} />
 
-        {/* Step indicator */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            padding: "1.5rem 2rem 0",
-            flexShrink: 0,
-          }}
-        >
-          {steps.map((step, i) => (
-            <div
-              key={step.n}
-              style={{ display: "flex", alignItems: "flex-start" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                }}
-              >
-                <div
-                  style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: "50%",
-                    border: `2px solid ${step.done ? "#4CAF50" : step.active ? "#111" : "#ccc"}`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: "Baloo 2",
-                    fontWeight: 700,
-                    fontSize: "0.9rem",
-                    color: step.done ? "#fff" : step.active ? "#111" : "#ccc",
-                    background: step.done ? "#4CAF50" : "#fff",
-                  }}
-                >
-                  {step.done ? (
-                    <Check size={16} strokeWidth={3} color="#fff" />
-                  ) : (
-                    step.n
-                  )}
-                </div>
-                <div
-                  style={{
-                    fontSize: "0.7rem",
-                    color: step.done || step.active ? "#111" : "#ccc",
-                    textAlign: "center",
-                    lineHeight: 1.3,
-                    whiteSpace: "pre-line",
-                    fontWeight: step.active ? 700 : 400,
-                  }}
-                >
-                  {step.label}
-                </div>
-              </div>
-              {i < 3 && (
-                <div
-                  style={{
-                    width: 60,
-                    height: 2,
-                    background: step.done ? "#4CAF50" : "#ddd",
-                    marginTop: 15,
-                    flexShrink: 0,
-                  }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
+        <StepIndicator currentScreen={SCREENS.POSE_PENGU} />
 
         {/* Heading */}
         <p
           style={{
             textAlign: "center",
-            fontFamily: "Nunito",
-            fontSize: "1rem",
-            color: "#333",
+            fontFamily: "var(--font-family-body)",
+            fontSize: "var(--font-size-base)",
+            color: "var(--color-text-muted)",
             margin: "1rem 0 0",
           }}
         >
@@ -386,10 +293,10 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
                           width: 20,
                           height: 20,
                           borderRadius: "50%",
-                          background: "#111",
-                          color: "#fff",
-                          fontSize: "0.7rem",
-                          fontWeight: 700,
+                          background: "var(--color-primary)",
+                          color: "var(--color-primary-contrast)",
+                          fontSize: "var(--font-size-xs)",
+                          fontWeight: "var(--font-weight-bold)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -402,7 +309,13 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
                 );
               })}
             </div>
-            <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "#aaa" }}>
+            <p
+              style={{
+                marginTop: "1rem",
+                fontSize: "var(--font-size-sm)",
+                color: "var(--color-text-faint)",
+              }}
+            >
               drag a pengu into a slot · drag out of the frame to remove
             </p>
           </div>
@@ -419,16 +332,16 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
           }}
         >
           <button
-            onClick={() => goTo("chooseFrame")}
+            onClick={onBack}
             style={{
-              background: "#111",
-              color: "#fff",
+              background: "var(--color-primary)",
+              color: "var(--color-primary-contrast)",
               border: "none",
               borderRadius: "999px",
               padding: "0.8rem 2rem",
-              fontFamily: "Nunito",
-              fontWeight: 700,
-              fontSize: "1rem",
+              fontFamily: "var(--font-family-body)",
+              fontWeight: "var(--font-weight-bold)",
+              fontSize: "var(--font-size-base)",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
@@ -438,17 +351,21 @@ export default function PosePengu({ goTo, frame, penguSlots, setPenguSlots }) {
             <ChevronLeft size={18} /> frame selection
           </button>
           <button
-            onClick={() => allFilled && goTo("addPhotos")}
+            onClick={() => allFilled && onNext()}
             disabled={!allFilled}
             style={{
-              background: allFilled ? "#111" : "#fff",
-              color: allFilled ? "#fff" : "#ccc",
-              border: `2px solid ${allFilled ? "#111" : "#ddd"}`,
+              background: allFilled
+                ? "var(--color-primary)"
+                : "var(--color-page)",
+              color: allFilled
+                ? "var(--color-primary-contrast)"
+                : "var(--color-text-disabled)",
+              border: `2px solid ${allFilled ? "var(--color-primary)" : "var(--color-border-soft)"}`,
               borderRadius: "999px",
               padding: "0.8rem 2rem",
-              fontFamily: "Nunito",
-              fontWeight: 700,
-              fontSize: "1rem",
+              fontFamily: "var(--font-family-body)",
+              fontWeight: "var(--font-weight-bold)",
+              fontSize: "var(--font-size-base)",
               cursor: allFilled ? "pointer" : "not-allowed",
               display: "flex",
               alignItems: "center",

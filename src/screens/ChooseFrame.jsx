@@ -1,6 +1,8 @@
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import NavBar from "../components/NavBar";
+import StepIndicator from "../components/StepIndicator";
+import { SCREENS } from "../navigation";
 import frame1 from "../assets/frames/framePoro.png";
 import frame2 from "../assets/frames/frameLeague.png";
 import frame3 from "../assets/frames/frameClouds.png";
@@ -15,12 +17,18 @@ const FRAMES = [
 
 const ROTATIONS = [-12, -5, 5, 12];
 
-export default function ChooseFrame({ goTo, setFrame }) {
-  const [selected, setSelected] = useState(null);
+export default function ChooseFrame({
+  frame,
+  onExit,
+  onNext,
+  onReset,
+  onSelectFrame,
+}) {
+  const [selected, setSelected] = useState(frame?.id ?? null);
 
   const handleSelect = (f) => {
     setSelected(f.id);
-    setFrame(f);
+    onSelectFrame(f);
   };
 
   return (
@@ -46,87 +54,9 @@ export default function ChooseFrame({ goTo, setFrame }) {
           overflow: "hidden",
         }}
       >
-        <NavBar />
+        <NavBar onHome={onReset} />
 
-        {/* Step indicator */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            gap: "0",
-            padding: "1.5rem 2rem 0",
-            flexShrink: 0,
-          }}
-        >
-          {[
-            { n: 1, label: "frame\nselection" },
-            { n: 2, label: "pose\npengu" },
-            { n: 3, label: "add your\nphotos" },
-            { n: 4, label: "decorate!" },
-          ].map((step, i) => (
-            <div
-              key={step.n}
-              style={{ display: "flex", alignItems: "flex-start" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                }}
-              >
-                <div
-                  style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: "50%",
-                    border: `2px solid ${step.n === 1 ? "var(--color-text)" : "var(--color-text-disabled)"}`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: "var(--font-family-display)",
-                    fontWeight: "var(--font-weight-bold)",
-                    fontSize: "var(--font-size-lg)",
-                    color:
-                      step.n === 1
-                        ? "var(--color-text)"
-                        : "var(--color-text-disabled)",
-                    background: "var(--color-page)",
-                  }}
-                >
-                  {step.n}
-                </div>
-                <div
-                  style={{
-                    fontSize: "var(--font-size-xs)",
-                    color:
-                      step.n === 1
-                        ? "var(--color-text)"
-                        : "var(--color-text-disabled)",
-                    textAlign: "center",
-                    lineHeight: "var(--line-height-label)",
-                    whiteSpace: "pre-line",
-                  }}
-                >
-                  {step.label}
-                </div>
-              </div>
-              {i < 3 && (
-                <div
-                  style={{
-                    width: 60,
-                    height: 2,
-                    background: "var(--color-border-soft)",
-                    marginTop: 15,
-                    flexShrink: 0,
-                  }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
+        <StepIndicator currentScreen={SCREENS.CHOOSE_FRAME} />
 
         {/* Heading */}
         <p
@@ -222,7 +152,7 @@ export default function ChooseFrame({ goTo, setFrame }) {
           }}
         >
           <button
-            onClick={() => goTo("landing")}
+            onClick={onExit}
             style={{
               background: "var(--color-primary)",
               color: "var(--color-primary-contrast)",
@@ -238,7 +168,7 @@ export default function ChooseFrame({ goTo, setFrame }) {
             exit
           </button>
           <button
-            onClick={() => selected && goTo("posePengu")}
+            onClick={() => selected && onNext()}
             disabled={!selected}
             style={{
               background: selected

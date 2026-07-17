@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
-import { ChevronRight, ChevronLeft, Check, Plus, Upload } from "lucide-react";
+import { ChevronRight, ChevronLeft, Plus, Upload } from "lucide-react";
 import NavBar from "../components/NavBar";
+import StepIndicator from "../components/StepIndicator";
+import { SCREENS } from "../navigation";
 import f1 from "../assets/frames/framePoro.png";
 import f2 from "../assets/frames/frameLeague.png";
 import f3 from "../assets/frames/frameClouds.png";
@@ -14,23 +16,22 @@ const SLOTS = [
   { topPct: 404 / 807, heightPct: (563 - 404) / 807 },
 ];
 
-const steps = [
-  { n: 1, label: "frame\nselection", done: true },
-  { n: 2, label: "pose\npengu", done: true },
-  { n: 3, label: "add your\nphotos", active: true },
-  { n: 4, label: "decorate!" },
-];
-
 export default function AddPhotos({
-  goTo,
   frame,
+  onBack,
+  onNext,
+  onReset,
   photos,
   setPhotos,
   penguSlots,
 }) {
   const slots = 3;
-  const [uploadedPhotos, setUploadedPhotos] = useState([]);
-  const [slotPhotos, setSlotPhotos] = useState(Array(slots).fill(null));
+  const [uploadedPhotos, setUploadedPhotos] = useState(() =>
+    photos.filter(Boolean),
+  );
+  const [slotPhotos, setSlotPhotos] = useState(() =>
+    Array.from({ length: slots }, (_, i) => photos[i] ?? null),
+  );
   const [activeSlot, setActiveSlot] = useState(0);
   const [draggingOver, setDraggingOver] = useState(false);
   const fileInputRef = useRef();
@@ -113,97 +114,9 @@ export default function AddPhotos({
           overflow: "hidden",
         }}
       >
-        <NavBar />
+        <NavBar onHome={onReset} />
 
-        {/* Step indicator */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            padding: "1.5rem 2rem 0",
-            flexShrink: 0,
-          }}
-        >
-          {steps.map((step, i) => (
-            <div
-              key={step.n}
-              style={{ display: "flex", alignItems: "flex-start" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                }}
-              >
-                <div
-                  style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: "50%",
-                    border: `2px solid ${step.done ? "var(--color-success)" : step.active ? "var(--color-text)" : "var(--color-text-disabled)"}`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: "var(--font-family-display)",
-                    fontWeight: "var(--font-weight-bold)",
-                    fontSize: "var(--font-size-lg)",
-                    color: step.done
-                      ? "var(--color-primary-contrast)"
-                      : step.active
-                        ? "var(--color-text)"
-                        : "var(--color-text-disabled)",
-                    background: step.done
-                      ? "var(--color-success)"
-                      : "var(--color-page)",
-                  }}
-                >
-                  {step.done ? (
-                    <Check
-                      size={16}
-                      strokeWidth={3}
-                      color="var(--color-primary-contrast)"
-                    />
-                  ) : (
-                    step.n
-                  )}
-                </div>
-                <div
-                  style={{
-                    fontSize: "var(--font-size-xs)",
-                    color:
-                      step.done || step.active
-                        ? "var(--color-text)"
-                        : "var(--color-text-disabled)",
-                    textAlign: "center",
-                    lineHeight: "var(--line-height-label)",
-                    whiteSpace: "pre-line",
-                    fontWeight: step.active
-                      ? "var(--font-weight-bold)"
-                      : "var(--font-weight-regular)",
-                  }}
-                >
-                  {step.label}
-                </div>
-              </div>
-              {i < 3 && (
-                <div
-                  style={{
-                    width: 60,
-                    height: 2,
-                    background: step.done
-                      ? "var(--color-success)"
-                      : "var(--color-border-soft)",
-                    marginTop: 15,
-                    flexShrink: 0,
-                  }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
+        <StepIndicator currentScreen={SCREENS.ADD_PHOTOS} />
 
         {/* Heading */}
         <p
@@ -619,7 +532,7 @@ export default function AddPhotos({
           }}
         >
           <button
-            onClick={() => goTo("posePengu")}
+            onClick={onBack}
             style={{
               background: "var(--color-primary)",
               color: "var(--color-primary-contrast)",
@@ -638,7 +551,7 @@ export default function AddPhotos({
             <ChevronLeft size={18} /> pose pengu
           </button>
           <button
-            onClick={() => allFilled && goTo("decorate")}
+            onClick={() => allFilled && onNext()}
             disabled={!allFilled}
             style={{
               background: allFilled

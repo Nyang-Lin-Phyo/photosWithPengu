@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700&display=swap");
+
+:root {
+  --font-family-body: "Nunito", sans-serif;
+  --font-family-display: "Baloo 2", cursive;
+  --font-family-serif: serif;
+  --font-style-emphasis: italic;
+
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+
+  --font-size-2xs: 0.6rem;
+  --font-size-xs: 0.7rem;
+  --font-size-sm: 0.8rem;
+  --font-size-md: 0.85rem;
+  --font-size-lg: 0.9rem;
+  --font-size-base: 1rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-hero: clamp(3rem, 5vw, 5rem);
+  --font-canvas-sticker: 40px serif;
+
+  --line-height-tight: 1.05;
+  --line-height-emphasis: 1.2;
+  --line-height-label: 1.3;
+  --line-height-copy: 1.8;
+  --letter-spacing-button: 0.01em;
+
+  --color-page: #fff;
+  --color-app-bg: #fafafa;
+  --color-surface: #fafafa;
+  --color-surface-light: #fafafa;
+  --color-surface-muted: #f0f0f0;
+  --color-surface-subtle: #eee;
+  --color-surface-warm: #fff3c4;
+  --color-transparent: transparent;
+
+  --color-text: #111;
+  --color-body-text: #2d2d2d;
+  --color-text-muted: #333;
+  --color-text-soft: #555;
+  --color-text-subtle: #888;
+  --color-text-faint: #aaa;
+  --color-text-soft-disabled: #bbb;
+  --color-text-disabled: #ccc;
+
+  --color-primary: #111;
+  --color-primary-contrast: #fff;
+  --color-border-muted: #eee;
+  --color-border-soft: #ddd;
+  --color-border-disabled: #ccc;
+
+  --color-accent-yellow: #ffd84d;
+  --color-accent-orange: #ff9a1f;
+  --color-accent-teal: #4fc3c3;
+  --color-accent-pink: #ff6b9d;
+  --color-success: #4caf50;
+  --color-danger: #e55;
+  --color-navy: #1a1a2e;
+
+  --color-light-overlay: rgba(255, 255, 255, 0.4);
+  --color-yellow-hover: rgba(255, 216, 77, 0.2);
+  --color-yellow-wash: rgba(255, 216, 77, 0.06);
+  --color-shadow-sm: rgba(0, 0, 0, 0.12);
+  --color-shadow-md: rgba(0, 0, 0, 0.15);
+  --color-shadow-lg: rgba(0, 0, 0, 0.25);
+
+  --shadow-pengu-card: 0 4px 16px var(--color-shadow-sm);
+  --shadow-frame-card: 0 4px 12px var(--color-shadow-md);
+  --shadow-frame-card-hover: 0 8px 24px var(--color-shadow-lg);
+  --shadow-strip: 0 8px 32px var(--color-shadow-md);
+
+  --yellow: var(--color-accent-yellow);
+  --navy: var(--color-navy);
+  --pink: var(--color-accent-pink);
+  --white: var(--color-surface);
+  --gray: var(--color-surface-muted);
+  --text: var(--color-body-text);
+}

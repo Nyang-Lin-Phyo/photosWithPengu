@@ -1,6 +1,4 @@
 import { Camera, Sparkles, ChevronRight } from "lucide-react";
-// import pengu from '../assets/penguMustacheSunglasses1.png'
-// import penguIcon from '../assets/pengu1.png'
 import pengu from "../assets/pengus/penguMustacheSunglasses.png";
 import penguIcon from "../assets/pengus/pengu.png";
 

@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
-import penguIcon from "../assets/pengus/pengu.png";
+import NavBar from "../components/NavBar";
 import frame1 from "../assets/frames/framePoro.png";
 import frame2 from "../assets/frames/frameLeague.png";
 import frame3 from "../assets/frames/frameClouds.png";
@@ -29,10 +29,10 @@ export default function ChooseFrame({ goTo, setFrame }) {
         .frame-card {
           cursor: pointer;
           transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), filter 0.3s ease;
-          filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+          filter: drop-shadow(var(--shadow-frame-card));
         }
         .frame-card:hover {
-          filter: drop-shadow(0 8px 24px rgba(0,0,0,0.25));
+          filter: drop-shadow(var(--shadow-frame-card-hover));
         }
       `}</style>
 
@@ -41,43 +41,12 @@ export default function ChooseFrame({ goTo, setFrame }) {
           display: "flex",
           flexDirection: "column",
           height: "100vh",
-          background: "#fff",
-          fontFamily: "Nunito, sans-serif",
+          background: "var(--color-page)",
+          fontFamily: "var(--font-family-body)",
           overflow: "hidden",
         }}
       >
-        {/* Navbar */}
-        <nav
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.6rem",
-            padding: "1rem 2rem",
-            borderBottom: "1px solid #eee",
-            flexShrink: 0,
-          }}
-        >
-          <img
-            src={penguIcon}
-            alt="pengu"
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span
-            style={{
-              fontFamily: "Baloo 2",
-              fontWeight: 700,
-              fontSize: "1rem",
-              color: "#111",
-            }}
-          >
-            pengu photobooth
-          </span>
-        </nav>
+        <NavBar />
 
         {/* Step indicator */}
         <div
@@ -113,25 +82,31 @@ export default function ChooseFrame({ goTo, setFrame }) {
                     width: 32,
                     height: 32,
                     borderRadius: "50%",
-                    border: `2px solid ${step.n === 1 ? "#111" : "#ccc"}`,
+                    border: `2px solid ${step.n === 1 ? "var(--color-text)" : "var(--color-text-disabled)"}`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontFamily: "Baloo 2",
-                    fontWeight: 700,
-                    fontSize: "0.9rem",
-                    color: step.n === 1 ? "#111" : "#ccc",
-                    background: "#fff",
+                    fontFamily: "var(--font-family-display)",
+                    fontWeight: "var(--font-weight-bold)",
+                    fontSize: "var(--font-size-lg)",
+                    color:
+                      step.n === 1
+                        ? "var(--color-text)"
+                        : "var(--color-text-disabled)",
+                    background: "var(--color-page)",
                   }}
                 >
                   {step.n}
                 </div>
                 <div
                   style={{
-                    fontSize: "0.7rem",
-                    color: step.n === 1 ? "#111" : "#ccc",
+                    fontSize: "var(--font-size-xs)",
+                    color:
+                      step.n === 1
+                        ? "var(--color-text)"
+                        : "var(--color-text-disabled)",
                     textAlign: "center",
-                    lineHeight: 1.3,
+                    lineHeight: "var(--line-height-label)",
                     whiteSpace: "pre-line",
                   }}
                 >
@@ -143,7 +118,7 @@ export default function ChooseFrame({ goTo, setFrame }) {
                   style={{
                     width: 60,
                     height: 2,
-                    background: "#ddd",
+                    background: "var(--color-border-soft)",
                     marginTop: 15,
                     flexShrink: 0,
                   }}
@@ -157,9 +132,9 @@ export default function ChooseFrame({ goTo, setFrame }) {
         <p
           style={{
             textAlign: "center",
-            fontFamily: "Nunito",
-            fontSize: "1rem",
-            color: "#333",
+            fontFamily: "var(--font-family-body)",
+            fontSize: "var(--font-size-base)",
+            color: "var(--color-text-muted)",
             margin: "1.5rem 0 0",
           }}
         >
@@ -213,10 +188,10 @@ export default function ChooseFrame({ goTo, setFrame }) {
                       display: "flex",
                       alignItems: "center",
                       gap: "0.4rem",
-                      fontFamily: "Nunito",
-                      fontWeight: 700,
-                      fontSize: "0.9rem",
-                      color: "#333",
+                      fontFamily: "var(--font-family-body)",
+                      fontWeight: "var(--font-weight-bold)",
+                      fontSize: "var(--font-size-lg)",
+                      color: "var(--color-text-muted)",
                     }}
                   >
                     <div
@@ -224,7 +199,7 @@ export default function ChooseFrame({ goTo, setFrame }) {
                         width: 10,
                         height: 10,
                         borderRadius: "50%",
-                        background: "#4CAF50",
+                        background: "var(--color-success)",
                         flexShrink: 0,
                       }}
                     />
@@ -249,14 +224,14 @@ export default function ChooseFrame({ goTo, setFrame }) {
           <button
             onClick={() => goTo("landing")}
             style={{
-              background: "#111",
-              color: "#fff",
+              background: "var(--color-primary)",
+              color: "var(--color-primary-contrast)",
               border: "none",
               borderRadius: "999px",
               padding: "0.8rem 2.5rem",
-              fontFamily: "Nunito",
-              fontWeight: 700,
-              fontSize: "1rem",
+              fontFamily: "var(--font-family-body)",
+              fontWeight: "var(--font-weight-bold)",
+              fontSize: "var(--font-size-base)",
               cursor: "pointer",
             }}
           >
@@ -266,14 +241,18 @@ export default function ChooseFrame({ goTo, setFrame }) {
             onClick={() => selected && goTo("posePengu")}
             disabled={!selected}
             style={{
-              background: selected ? "#111" : "#fff",
-              color: selected ? "#fff" : "#ccc",
-              border: `2px solid ${selected ? "#111" : "#ddd"}`,
+              background: selected
+                ? "var(--color-primary)"
+                : "var(--color-page)",
+              color: selected
+                ? "var(--color-primary-contrast)"
+                : "var(--color-text-disabled)",
+              border: `2px solid ${selected ? "var(--color-primary)" : "var(--color-border-soft)"}`,
               borderRadius: "999px",
               padding: "0.8rem 2.5rem",
-              fontFamily: "Nunito",
-              fontWeight: 700,
-              fontSize: "1rem",
+              fontFamily: "var(--font-family-body)",
+              fontWeight: "var(--font-weight-bold)",
+              fontSize: "var(--font-size-base)",
               cursor: selected ? "pointer" : "not-allowed",
               display: "flex",
               alignItems: "center",

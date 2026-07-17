@@ -1,16 +1,5 @@
 import { useState } from "react";
 import { ChevronRight, ChevronLeft, Check } from "lucide-react";
-// import penguIcon from '../assets/pengu1.png'
-// import p1 from '../assets/pengu1.png'
-// import p2 from '../assets/pengu2.png'
-// import p3 from '../assets/pengu3.png'
-// import p4 from '../assets/pengu4.png'
-// import p5 from '../assets/pengu5.png'
-// import p6 from '../assets/pengu6.png'
-// import f1 from '../assets/framePoro1.png'
-// import f2 from '../assets/framePoro2.png'
-// import f3 from '../assets/framePoro3.png'
-// import f4 from '../assets/framePoro4.png'
 import penguIcon from "../assets/pengus/pengu.png";
 import p1 from "../assets/pengus/pengu.png";
 import p2 from "../assets/pengus/penguBlur.png";

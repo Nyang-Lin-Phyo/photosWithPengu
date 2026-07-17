@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { ChevronRight, ChevronLeft, Check, Plus, Upload } from "lucide-react";
-import penguIcon from "../assets/pengus/pengu.png";
+import NavBar from "../components/NavBar";
 import f1 from "../assets/frames/framePoro.png";
 import f2 from "../assets/frames/frameLeague.png";
 import f3 from "../assets/frames/frameClouds.png";
@@ -69,25 +69,25 @@ export default function AddPhotos({
     <>
       <style>{`
         .upload-zone {
-          border: 2px dashed #ccc;
+          border: 2px dashed var(--color-border-disabled);
           border-radius: 16px;
           transition: border-color 0.2s, background 0.2s;
           cursor: pointer;
         }
         .upload-zone:hover, .upload-zone.drag-over {
-          border-color: #FFD84D;
-          background: rgba(255,216,77,0.06);
+          border-color: var(--color-accent-yellow);
+          background: var(--color-yellow-wash);
         }
         .thumb {
           border-radius: 8px;
           overflow: hidden;
           cursor: pointer;
-          border: 3px solid transparent;
+          border: 3px solid var(--color-transparent);
           transition: border 0.15s, transform 0.15s;
           aspect-ratio: 1;
           flex-shrink: 0;
         }
-        .thumb:hover { border-color: #FFD84D; transform: scale(1.04); }
+        .thumb:hover { border-color: var(--color-accent-yellow); transform: scale(1.04); }
         .ap-slot {
           position: absolute;
           left: 9%;
@@ -95,12 +95,12 @@ export default function AddPhotos({
           overflow: hidden;
           border-radius: 6px;
           cursor: pointer;
-          border: 3px solid transparent;
+          border: 3px solid var(--color-transparent);
           transition: border 0.15s;
           box-sizing: border-box;
         }
-        .ap-slot.active { border-color: #FFD84D; }
-        .ap-slot.filled { border-color: #4CAF50; }
+        .ap-slot.active { border-color: var(--color-accent-yellow); }
+        .ap-slot.filled { border-color: var(--color-success); }
       `}</style>
 
       <div
@@ -108,43 +108,12 @@ export default function AddPhotos({
           display: "flex",
           flexDirection: "column",
           height: "100vh",
-          background: "#fff",
-          fontFamily: "Nunito, sans-serif",
+          background: "var(--color-page)",
+          fontFamily: "var(--font-family-body)",
           overflow: "hidden",
         }}
       >
-        {/* Navbar */}
-        <nav
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.6rem",
-            padding: "1rem 2rem",
-            borderBottom: "1px solid #eee",
-            flexShrink: 0,
-          }}
-        >
-          <img
-            src={penguIcon}
-            alt="pengu"
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span
-            style={{
-              fontFamily: "Baloo 2",
-              fontWeight: 700,
-              fontSize: "1rem",
-              color: "#111",
-            }}
-          >
-            pengu photobooth
-          </span>
-        </nav>
+        <NavBar />
 
         {/* Step indicator */}
         <div
@@ -174,31 +143,46 @@ export default function AddPhotos({
                     width: 32,
                     height: 32,
                     borderRadius: "50%",
-                    border: `2px solid ${step.done ? "#4CAF50" : step.active ? "#111" : "#ccc"}`,
+                    border: `2px solid ${step.done ? "var(--color-success)" : step.active ? "var(--color-text)" : "var(--color-text-disabled)"}`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontFamily: "Baloo 2",
-                    fontWeight: 700,
-                    fontSize: "0.9rem",
-                    color: step.done ? "#fff" : step.active ? "#111" : "#ccc",
-                    background: step.done ? "#4CAF50" : "#fff",
+                    fontFamily: "var(--font-family-display)",
+                    fontWeight: "var(--font-weight-bold)",
+                    fontSize: "var(--font-size-lg)",
+                    color: step.done
+                      ? "var(--color-primary-contrast)"
+                      : step.active
+                        ? "var(--color-text)"
+                        : "var(--color-text-disabled)",
+                    background: step.done
+                      ? "var(--color-success)"
+                      : "var(--color-page)",
                   }}
                 >
                   {step.done ? (
-                    <Check size={16} strokeWidth={3} color="#fff" />
+                    <Check
+                      size={16}
+                      strokeWidth={3}
+                      color="var(--color-primary-contrast)"
+                    />
                   ) : (
                     step.n
                   )}
                 </div>
                 <div
                   style={{
-                    fontSize: "0.7rem",
-                    color: step.done || step.active ? "#111" : "#ccc",
+                    fontSize: "var(--font-size-xs)",
+                    color:
+                      step.done || step.active
+                        ? "var(--color-text)"
+                        : "var(--color-text-disabled)",
                     textAlign: "center",
-                    lineHeight: 1.3,
+                    lineHeight: "var(--line-height-label)",
                     whiteSpace: "pre-line",
-                    fontWeight: step.active ? 700 : 400,
+                    fontWeight: step.active
+                      ? "var(--font-weight-bold)"
+                      : "var(--font-weight-regular)",
                   }}
                 >
                   {step.label}
@@ -209,7 +193,9 @@ export default function AddPhotos({
                   style={{
                     width: 60,
                     height: 2,
-                    background: step.done ? "#4CAF50" : "#ddd",
+                    background: step.done
+                      ? "var(--color-success)"
+                      : "var(--color-border-soft)",
                     marginTop: 15,
                     flexShrink: 0,
                   }}
@@ -223,9 +209,9 @@ export default function AddPhotos({
         <p
           style={{
             textAlign: "center",
-            fontFamily: "Nunito",
-            fontSize: "1rem",
-            color: "#333",
+            fontFamily: "var(--font-family-body)",
+            fontSize: "var(--font-size-base)",
+            color: "var(--color-text-muted)",
             margin: "1rem 0 0",
           }}
         >
@@ -324,8 +310,8 @@ export default function AddPhotos({
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      color: "rgba(255,255,255,0.4)",
-                      fontSize: "0.8rem",
+                      color: "var(--color-light-overlay)",
+                      fontSize: "var(--font-size-sm)",
                     }}
                   >
                     {i + 1}
@@ -338,16 +324,16 @@ export default function AddPhotos({
                       position: "absolute",
                       top: 4,
                       right: 4,
-                      background: "#FFD84D",
+                      background: "var(--color-accent-yellow)",
                       borderRadius: "50%",
                       width: 16,
                       height: 16,
-                      fontSize: "0.6rem",
+                      fontSize: "var(--font-size-2xs)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontWeight: 700,
-                      color: "#111",
+                      fontWeight: "var(--font-weight-bold)",
+                      color: "var(--color-text)",
                       zIndex: 4,
                     }}
                   >
@@ -386,22 +372,28 @@ export default function AddPhotos({
                   justifyContent: "center",
                   gap: "0.75rem",
                   padding: "4rem 2rem",
-                  background: "#fafafa",
+                  background: "var(--color-surface-light)",
                 }}
               >
-                <Upload size={40} color="#aaa" />
+                <Upload size={40} color="var(--color-text-faint)" />
                 <p
                   style={{
-                    fontFamily: "Nunito",
-                    fontWeight: 700,
-                    fontSize: "1rem",
-                    color: "#555",
+                    fontFamily: "var(--font-family-body)",
+                    fontWeight: "var(--font-weight-bold)",
+                    fontSize: "var(--font-size-base)",
+                    color: "var(--color-text-soft)",
                     margin: 0,
                   }}
                 >
                   click to add or drag and drop your photos here
                 </p>
-                <p style={{ fontSize: "0.8rem", color: "#aaa", margin: 0 }}>
+                <p
+                  style={{
+                    fontSize: "var(--font-size-sm)",
+                    color: "var(--color-text-faint)",
+                    margin: 0,
+                  }}
+                >
                   JPEG and PNG formats, up to 50MB
                 </p>
                 <button
@@ -410,14 +402,14 @@ export default function AddPhotos({
                     fileInputRef.current.click();
                   }}
                   style={{
-                    background: "#111",
-                    color: "#fff",
+                    background: "var(--color-primary)",
+                    color: "var(--color-primary-contrast)",
                     border: "none",
                     borderRadius: "999px",
                     padding: "0.6rem 1.8rem",
-                    fontFamily: "Nunito",
-                    fontWeight: 700,
-                    fontSize: "0.95rem",
+                    fontFamily: "var(--font-family-body)",
+                    fontWeight: "var(--font-weight-bold)",
+                    fontSize: "var(--font-size-base)",
                     cursor: "pointer",
                     marginTop: "0.5rem",
                   }}
@@ -451,16 +443,16 @@ export default function AddPhotos({
                       width: 80,
                       height: 80,
                       borderRadius: 8,
-                      border: "2px dashed #ccc",
+                      border: "2px dashed var(--color-border-disabled)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       cursor: "pointer",
                       flexShrink: 0,
-                      background: "#fafafa",
+                      background: "var(--color-surface-light)",
                     }}
                   >
-                    <Plus size={20} color="#aaa" />
+                    <Plus size={20} color="var(--color-text-faint)" />
                   </div>
                   {uploadedPhotos.map((url, i) => (
                     <div
@@ -488,7 +480,7 @@ export default function AddPhotos({
                     flex: 1,
                     borderRadius: 12,
                     overflow: "hidden",
-                    background: "#f0f0f0",
+                    background: "var(--color-surface-muted)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -511,11 +503,11 @@ export default function AddPhotos({
                         flexDirection: "column",
                         alignItems: "center",
                         gap: "0.5rem",
-                        color: "#bbb",
+                        color: "var(--color-text-soft-disabled)",
                       }}
                     >
                       <Upload size={32} />
-                      <span style={{ fontSize: "0.85rem" }}>
+                      <span style={{ fontSize: "var(--font-size-md)" }}>
                         click a photo to assign to slot {activeSlot + 1}
                       </span>
                     </div>
@@ -541,13 +533,16 @@ export default function AddPhotos({
                     background: "none",
                     border: "none",
                     cursor: activeSlot === 0 ? "not-allowed" : "pointer",
-                    color: activeSlot === 0 ? "#ccc" : "#111",
+                    color:
+                      activeSlot === 0
+                        ? "var(--color-text-disabled)"
+                        : "var(--color-text)",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.3rem",
-                    fontFamily: "Nunito",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
+                    fontFamily: "var(--font-family-body)",
+                    fontWeight: "var(--font-weight-semibold)",
+                    fontSize: "var(--font-size-md)",
                   }}
                 >
                   <ChevronLeft size={16} /> previous frame
@@ -563,18 +558,20 @@ export default function AddPhotos({
                         borderRadius: "50%",
                         background:
                           activeSlot === i
-                            ? "#111"
+                            ? "var(--color-primary)"
                             : slotPhotos[i]
-                              ? "#4CAF50"
-                              : "#eee",
+                              ? "var(--color-success)"
+                              : "var(--color-surface-subtle)",
                         color:
-                          activeSlot === i || slotPhotos[i] ? "#fff" : "#aaa",
+                          activeSlot === i || slotPhotos[i]
+                            ? "var(--color-primary-contrast)"
+                            : "var(--color-text-faint)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        fontFamily: "Baloo 2",
-                        fontWeight: 700,
-                        fontSize: "0.85rem",
+                        fontFamily: "var(--font-family-display)",
+                        fontWeight: "var(--font-weight-bold)",
+                        fontSize: "var(--font-size-md)",
                         cursor: "pointer",
                       }}
                     >
@@ -592,13 +589,16 @@ export default function AddPhotos({
                     border: "none",
                     cursor:
                       activeSlot === slots - 1 ? "not-allowed" : "pointer",
-                    color: activeSlot === slots - 1 ? "#ccc" : "#111",
+                    color:
+                      activeSlot === slots - 1
+                        ? "var(--color-text-disabled)"
+                        : "var(--color-text)",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.3rem",
-                    fontFamily: "Nunito",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
+                    fontFamily: "var(--font-family-body)",
+                    fontWeight: "var(--font-weight-semibold)",
+                    fontSize: "var(--font-size-md)",
                   }}
                 >
                   next frame <ChevronRight size={16} />
@@ -621,14 +621,14 @@ export default function AddPhotos({
           <button
             onClick={() => goTo("posePengu")}
             style={{
-              background: "#111",
-              color: "#fff",
+              background: "var(--color-primary)",
+              color: "var(--color-primary-contrast)",
               border: "none",
               borderRadius: "999px",
               padding: "0.8rem 2rem",
-              fontFamily: "Nunito",
-              fontWeight: 700,
-              fontSize: "1rem",
+              fontFamily: "var(--font-family-body)",
+              fontWeight: "var(--font-weight-bold)",
+              fontSize: "var(--font-size-base)",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
@@ -641,14 +641,18 @@ export default function AddPhotos({
             onClick={() => allFilled && goTo("decorate")}
             disabled={!allFilled}
             style={{
-              background: allFilled ? "#111" : "#fff",
-              color: allFilled ? "#fff" : "#ccc",
-              border: `2px solid ${allFilled ? "#111" : "#ddd"}`,
+              background: allFilled
+                ? "var(--color-primary)"
+                : "var(--color-page)",
+              color: allFilled
+                ? "var(--color-primary-contrast)"
+                : "var(--color-text-disabled)",
+              border: `2px solid ${allFilled ? "var(--color-primary)" : "var(--color-border-soft)"}`,
               borderRadius: "999px",
               padding: "0.8rem 2rem",
-              fontFamily: "Nunito",
-              fontWeight: 700,
-              fontSize: "1rem",
+              fontFamily: "var(--font-family-body)",
+              fontWeight: "var(--font-weight-bold)",
+              fontSize: "var(--font-size-base)",
               cursor: allFilled ? "pointer" : "not-allowed",
               display: "flex",
               alignItems: "center",

@@ -11,7 +11,8 @@ export default function SaveStrip({ goTo, frame, photos, stickers }) {
     canvas.width = W
     canvas.height = H * slots + 20
 
-    ctx.fillStyle = '#1a1a2e'
+    const theme = getComputedStyle(document.documentElement)
+    ctx.fillStyle = theme.getPropertyValue('--color-navy').trim()
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     photos.forEach((src, i) => {
@@ -21,7 +22,7 @@ export default function SaveStrip({ goTo, frame, photos, stickers }) {
         // draw stickers on last photo load
         if (i === photos.length - 1) {
           stickers.forEach(s => {
-            ctx.font = '40px serif'
+            ctx.font = theme.getPropertyValue('--font-canvas-sticker').trim()
             ctx.fillText(s.emoji, s.x, s.y)
           })
         }
@@ -38,20 +39,20 @@ export default function SaveStrip({ goTo, frame, photos, stickers }) {
   }
 
   return (
-    <div style={{ minHeight:'100vh', padding:'2rem', background:'var(--white)', display:'flex', flexDirection:'column', alignItems:'center' }}>
-      <h2 style={{ fontFamily:'Baloo 2', fontSize:'2rem', marginBottom:'0.5rem', alignSelf:'flex-start' }}>Your photo strip!</h2>
-      <p style={{ color:'#888', marginBottom:'2rem', alignSelf:'flex-start' }}>Looking good 🎉</p>
+    <div style={{ minHeight:'100vh', padding:'2rem', background:'var(--color-surface)', display:'flex', flexDirection:'column', alignItems:'center' }}>
+      <h2 style={{ fontFamily:'var(--font-family-display)', fontSize:'var(--font-size-2xl)', marginBottom:'0.5rem', alignSelf:'flex-start' }}>Your photo strip!</h2>
+      <p style={{ color:'var(--color-text-subtle)', marginBottom:'2rem', alignSelf:'flex-start' }}>Looking good 🎉</p>
 
-      <canvas ref={canvasRef} style={{ borderRadius:12, boxShadow:'0 8px 32px rgba(0,0,0,0.15)', maxWidth:'100%' }} />
+      <canvas ref={canvasRef} style={{ borderRadius:12, boxShadow:'var(--shadow-strip)', maxWidth:'100%' }} />
 
       <div style={{ display:'flex', gap:'1rem', marginTop:'2rem' }}>
-        <button onClick={() => goTo('decorate')} style={{ background:'none', border:'none', color:'#888', cursor:'pointer' }}>← Back</button>
+        <button onClick={() => goTo('decorate')} style={{ background:'none', border:'none', color:'var(--color-text-subtle)', cursor:'pointer' }}>← Back</button>
         <button onClick={download}
-          style={{ background:'var(--yellow)', color:'var(--navy)', border:'none', borderRadius:'999px', padding:'0.8rem 2rem', fontFamily:'Baloo 2', fontWeight:800, fontSize:'1rem', cursor:'pointer' }}>
+          style={{ background:'var(--color-accent-yellow)', color:'var(--color-navy)', border:'none', borderRadius:'999px', padding:'0.8rem 2rem', fontFamily:'var(--font-family-display)', fontWeight:'var(--font-weight-extra-bold)', fontSize:'var(--font-size-base)', cursor:'pointer' }}>
           ⬇ Download Strip
         </button>
         <button onClick={() => goTo('landing')}
-          style={{ background:'var(--navy)', color:'var(--white)', border:'none', borderRadius:'999px', padding:'0.8rem 2rem', fontFamily:'Baloo 2', fontWeight:800, fontSize:'1rem', cursor:'pointer' }}>
+          style={{ background:'var(--color-navy)', color:'var(--color-surface)', border:'none', borderRadius:'999px', padding:'0.8rem 2rem', fontFamily:'var(--font-family-display)', fontWeight:'var(--font-weight-extra-bold)', fontSize:'var(--font-size-base)', cursor:'pointer' }}>
           Start over
         </button>
       </div>

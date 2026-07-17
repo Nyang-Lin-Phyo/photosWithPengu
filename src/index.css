@@ -1,20 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap');
+@import "./styles/theme.css";
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-  --yellow: #FFD84D;
-  --navy: #1a1a2e;
-  --pink: #FF6B9D;
-  --white: #FAFAFA;
-  --gray: #f0f0f0;
-  --text: #2d2d2d;
-}
-
 body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--white);
-  color: var(--text);
+  font-family: var(--font-family-body);
+  background: var(--color-app-bg);
+  color: var(--color-body-text);
   min-height: 100vh;
 }
 
